@@ -42,9 +42,9 @@ const posts:Post[] = [
     }
   ];
 
-const normalizeData = (data: Pick<Post, 'id'>[]) => {
+const normalizeData = <T extends { 'id': string }>(data: T[]) => {
     interface idWithData {
-        [key: string]: typeof data[0],
+        [key: string]: T,
     }
 
     const byIds: idWithData = {};
@@ -52,7 +52,7 @@ const normalizeData = (data: Pick<Post, 'id'>[]) => {
 
     for (let key of data) {
         byIds[key.id] = key;
-        allIds.push(key.id)
+        allIds.push(key.id);
     }
     
     return {
